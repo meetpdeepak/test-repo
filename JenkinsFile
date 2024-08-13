@@ -1,9 +1,9 @@
 pipeline {
     agent any
 
-    environment {
+/*    environment {
         // Define environment variables if needed, e.g., JAVA_HOME
-    }
+    }*/
 
     stages {
         stage('Checkout') {
