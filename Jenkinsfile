@@ -1,10 +1,5 @@
 pipeline {
     agent any
-
-/*    environment {
-        // Define environment variables if needed, e.g., JAVA_HOME
-    }*/
-
     stages {
         stage('Checkout') {
             steps {
@@ -15,15 +10,15 @@ pipeline {
 
         stage('Setup') {
             steps {
-                // Install dependencies (if any)
-                sh 'mvn clean install'
+                // Install dependencies using Maven
+                bat 'mvn clean install'
             }
         }
 
         stage('Run Tests') {
             steps {
-                // Run the Selenium TestNG tests
-                sh 'mvn test'
+                // Run the Selenium TestNG tests using Maven
+                bat 'mvn test'
             }
         }
 
@@ -44,6 +39,7 @@ pipeline {
             // Archive test results and reports
             junit 'target/surefire-reports/*.xml'
             archiveArtifacts artifacts: 'reports/*.html', allowEmptyArchive: true
+            cleanWs()
         }
         success {
             echo 'Build completed successfully!'
