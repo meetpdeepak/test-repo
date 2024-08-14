@@ -1,5 +1,8 @@
 pipeline {
     agent any
+    tools {
+        maven 'Maven3' // The name configured in Jenkins Global Tool Configuration
+    }
     stages {
         stage('Checkout') {
             steps {
@@ -10,16 +13,15 @@ pipeline {
 
         stage('Setup') {
             steps {
-                // Ensure that Maven is available on PATH
-                // Install dependencies (if necessary)
-                bat 'mvn clean install'
+                // Install dependencies (if any)
+                sh '"${tool name: 'Maven3', type: 'maven'}"/bin/mvn clean install'
             }
         }
 
         stage('Run Tests') {
             steps {
-                // Run TestNG tests
-                bat 'mvn test -DsuiteXmlFile=testng.xml'
+                // Run the Selenium TestNG tests
+                sh '"${tool name: 'Maven3', type: 'maven'}"/bin/mvn test'
             }
         }
 
