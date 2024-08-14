@@ -1,8 +1,7 @@
 pipeline {
     agent any
     tools {
-        // Define the Maven tool name as configured in Jenkins
-        maven 'Maven3' // Replace 'Maven3' with the name you used in Jenkins configuration
+        maven 'Maven3' // Replace 'Maven3' with the name configured in Jenkins
     }
     stages {
         stage('Checkout') {
@@ -15,15 +14,15 @@ pipeline {
         stage('Setup') {
             steps {
                 // Use Maven from Jenkins tool configuration
-                // The Maven executable will be automatically available in the PATH
-                sh 'mvn clean install'
+                // Ensure Maven is correctly set up in PATH
+                bat 'mvn clean install'
             }
         }
 
         stage('Run Tests') {
             steps {
                 // Run the Selenium TestNG tests
-                sh 'mvn test'
+                bat 'mvn test'
             }
         }
 
