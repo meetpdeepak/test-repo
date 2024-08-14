@@ -10,15 +10,16 @@ pipeline {
 
         stage('Setup') {
             steps {
-                // Install dependencies using Maven
+                // Ensure that Maven is available on PATH
+                // Install dependencies (if necessary)
                 bat 'mvn clean install'
             }
         }
 
         stage('Run Tests') {
             steps {
-                // Run the Selenium TestNG tests using Maven
-                bat 'mvn test'
+                // Run TestNG tests
+                bat 'mvn test -DsuiteXmlFile=testng.xml'
             }
         }
 
@@ -39,7 +40,6 @@ pipeline {
             // Archive test results and reports
             junit 'target/surefire-reports/*.xml'
             archiveArtifacts artifacts: 'reports/*.html', allowEmptyArchive: true
-            cleanWs()
         }
         success {
             echo 'Build completed successfully!'
